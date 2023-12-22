@@ -32,12 +32,16 @@ async function run() {
 
         app.get('/api/v1/tasks', async (req, res) => {
             const taskStatus = req.query.status;
+            const userEmail = req.query.email;
             const item = req.query.id;
 
             let query = {}
 
             if (taskStatus) {
                 query.status = taskStatus
+            }
+            if (userEmail) {
+                query.userEmail = userEmail
             }
 
             if (item) {
