@@ -30,6 +30,24 @@ async function run() {
 
         const taskCollection = client.db('taskCrafter').collection('tasks');
 
+        app.get('/api/v1/tasks', async (req, res) => {
+            const taskStatus = req.query.status;
+            const item = req.query.id;
+
+            let query = {}
+
+            if (taskStatus) {
+                query.status = taskStatus
+            }
+
+            if (item) {
+                query._id = new ObjectId(item)
+            }
+
+            const result = await taskCollection.find(query).toArray();
+            res.send(result);
+        })
+
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
